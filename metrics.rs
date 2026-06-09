@@ -34,8 +34,7 @@ pub struct System {
 
 impl System {
     pub fn generate() -> Self {
-        // TODO: folosit sysinfo
-        Self{
+        Self {
             name: sysinfo::System::name().unwrap_or_else(|| "Unknown".to_string()),
             kernel_version: sysinfo::System::kernel_version().unwrap_or_else(|| "Unknown".to_string()),
             os_version: sysinfo::System::os_version().unwrap_or_else(|| "Unknown".to_string()),
@@ -46,7 +45,6 @@ impl System {
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
-
 pub struct Process {
     pid: u32,
     name: String,
@@ -57,25 +55,6 @@ pub struct Process {
 
 impl Process {
     pub fn generate(sys: &mut sysinfo::System) -> Vec<Self> {
-        // let mut ret = vec![];
-        // for (pid, process) in sys.processes() {
-        //     let pid = process.pid().as_u32();
-        //     let name = process.name().to_string_lossy().into_owned();
-        //     let memory = process.memory();
-        //     let cpu_usage = process.cpu_usage();
-        //     let run_time = process.run_time();
-            
-        //     let process = Process {
-        //         pid,
-        //         name,
-        //         memory,
-        //         cpu_usage,
-        //         run_time,
-        //     };
-        //     ret.push(process);
-        // }
-        // ret
-
         sys.processes().iter().map(|(pid, process)| {
             let pid = pid.as_u32();
             let name = process.name().to_string_lossy().into_owned();
