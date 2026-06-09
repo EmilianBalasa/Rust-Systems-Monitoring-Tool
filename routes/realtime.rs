@@ -11,6 +11,7 @@ pub fn register() -> Router {
   async fn realtime_metrics() -> impl IntoResponse {
     let mut sys = crate::metrics::init().await;
 
+    // Broadcast system metrics every second using Server-Sent Events (SSE)
     let stream = IntervalStream::new(tokio::time::interval(Duration::from_secs(1))).map(move |_| {
     let metrics = crate::metrics::Summary::generate(&mut sys);
     let event = Event::default().data(serde_json::to_string(&metrics).unwrap_or_default());
