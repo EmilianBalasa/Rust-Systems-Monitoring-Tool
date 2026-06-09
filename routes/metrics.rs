@@ -22,6 +22,4 @@ async fn get_metric(Path(kind): Path<Kind>) -> impl IntoResponse {
         Kind::Cpu => Json(serde_json::to_value(Cpu::generate(&mut sys)).unwrap()),
         Kind::Disk => Json(serde_json::to_value(Disk::generate()).unwrap()),
     }
-    // Json(ans)
-    // serde_json::to_string(&kind).unwrap()
 }
